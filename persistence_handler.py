@@ -6,7 +6,7 @@ from typing import Self, Type, Tuple
 
 
 DEFAULT = {
-    "participants": [],
+    "participants": list(),
     "event_channel": 0,
     "starting_time": 0,
     "ending_time": 0
