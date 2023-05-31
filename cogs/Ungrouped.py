@@ -14,11 +14,9 @@ class CUngrouped(extCommands.Cog, name=__name__, guild_ids=[config.guild_id]):
     
     # Application commands
     @slash_command()
-    @extCommands.is_owner()
-    async def reload_config(self, ctx: ApplicationContext):
-        """Reload config"""
-        config_handler.reload_config()
-        await ctx.respond("Config reloaded", ephemeral=True)
+    async def hello_world(self, ctx: ApplicationContext):
+        """Hello world!"""
+        await ctx.respond("Hello world from the ungrouped group!", ephemeral=True)
 
 
 # Extension related functions

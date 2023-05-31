@@ -10,6 +10,13 @@ class CEventControl(extCommands.Cog, name=__name__, guild_ids=[config.guild_id])
         self.BOT = bot
 
 
+    # Application commands
+    @slash_command()
+    async def event_hello_world(self, ctx: ApplicationContext):
+        """Hello world!"""
+        await ctx.respond("Hello world from the EventControl group!", ephemeral=True)
+
+
 # Extension related functions
 def setup(bot: discord.Bot):
     bot.add_cog(CEventControl(bot))
