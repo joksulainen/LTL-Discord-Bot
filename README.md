@@ -9,5 +9,5 @@ I won't be upset if people choose to fork and continue work without me whether i
 ## How to contribute or continue work
 
 1. Install Python 3.11 and pipenv package via pip. Not much needs to be said here.
-1. Install project dependencies using `pipenv install` in project directory.
+1. Install project dependencies by running `pipenv install` in project directory.
 1. Off you go to contribute or whatever it is that you will do.
