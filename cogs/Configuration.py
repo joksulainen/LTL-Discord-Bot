@@ -2,8 +2,8 @@ import discord
 from discord import ApplicationContext, Option, slash_command
 import discord.ext.commands as extCommands
 
-import config_handler
-from config_handler import config
+import handlers.config
+from handlers.config import config
 from permission_decorators import is_admin
 
 
@@ -18,7 +18,7 @@ class CConfiguration(extCommands.Cog, name=__name__, guild_ids=[config.guild_id]
     @GROUP.command(name="reload")
     async def config_reload(self, ctx: ApplicationContext):
         """Reload config"""
-        config_handler.reload_config()
+        handlers.config.reload_config()
         await ctx.respond("Config reloaded", ephemeral=True)
     
     

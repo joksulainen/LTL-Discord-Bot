@@ -2,8 +2,8 @@ import discord
 from discord import ApplicationContext, Option, slash_command
 import discord.ext.commands as extCommands
 
-import config_handler
-from config_handler import config
+import handlers.config
+from handlers.config import config
 from permission_decorators import is_admin, is_moderator
 
 

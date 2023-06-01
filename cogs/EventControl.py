@@ -2,7 +2,7 @@ import discord
 from discord import ApplicationContext, Option, slash_command
 import discord.ext.commands as extCommands
 
-from config_handler import config
+from handlers.config import config
 
 
 class CEventControl(extCommands.Cog, name=__name__, guild_ids=[config.guild_id]):

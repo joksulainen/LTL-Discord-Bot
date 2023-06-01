@@ -7,8 +7,8 @@ import discord
 from discord import ApplicationContext, ApplicationCommandInvokeError
 import discord.ext.commands as extCommands
 
-import config_handler
-import persistence_handler
+import handlers.config
+import handlers.persistence
 import permission_decorators
 
 
@@ -56,10 +56,10 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
 # Setup function
 def setup():
     print("Loading config...")
-    config_handler.init_config("./config.json")
+    handlers.config.init_config("./config.json")
     print("Config loaded!")
     print("Loading persistent data...")
-    result = persistence_handler.init_persistence("./persistence.json")
+    result = handlers.persistence.init_persistence("./persistence.json")
     print("Loaded existing persistent data!" if result else "Generated new persistent file.")
     print("Loading cogs...")
     for filename in os.listdir("./cogs"):
@@ -72,4 +72,4 @@ def setup():
 if __name__ == "__main__":
     setup()
     print("Starting bot with token...")
-    BOT.run(config_handler.config.token)
+    BOT.run(handlers.config.config.token)

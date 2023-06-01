@@ -1,6 +1,6 @@
 from discord.ext.commands import CheckFailure, check, Context
 
-from config_handler import config
+from handlers.config import config
 
 
 def is_admin():
