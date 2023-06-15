@@ -72,4 +72,4 @@ def setup():
 if __name__ == "__main__":
     setup()
     print("Starting bot with token...")
-    BOT.run(handlers.config.config.token)
+    BOT.run(handlers.config.CONFIG.token)

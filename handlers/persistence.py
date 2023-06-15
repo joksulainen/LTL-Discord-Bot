@@ -43,18 +43,18 @@ class Persistence:
 
 
 # Functions to handle persistent data manipulation
-persistence: Persistence = None
+PERSISTENCE: Persistence = None
 
 def init_persistence(fp: str) -> bool | None:
     """Initialize a Persistence object. Does nothing if a Persistence object is already initialized.
     
     Returns None if nothing happened. Returns True if loaded from existing file."""
-    global persistence
-    if persistence is not None: return
-    persistence, result = Persistence.create_from_json(fp)
+    global PERSISTENCE
+    if PERSISTENCE is not None: return
+    PERSISTENCE, result = Persistence.create_from_json(fp)
     return result
 
 def update_persistence(**kwargs) -> None:
     """Updates persistence using provided kwargs and writes it to file."""
-    global persistence
-    persistence.update(**kwargs)
+    global PERSISTENCE
+    PERSISTENCE.update(**kwargs)

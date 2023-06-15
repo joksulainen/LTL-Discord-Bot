@@ -2,10 +2,10 @@ import discord
 from discord import ApplicationContext, Option, slash_command
 import discord.ext.commands as extCommands
 
-from handlers.config import config
+from handlers.config import CONFIG
 
 
-class CEventControl(extCommands.Cog, name=__name__, guild_ids=[config.guild_id]):
+class CEventControl(extCommands.Cog, name=__name__, guild_ids=[CONFIG.guild_id]):
     def __init__(self, bot: discord.Bot):
         self.BOT = bot
 

@@ -44,21 +44,21 @@ class Config:
 
 
 # Functions to handle config manipulation
-config: Config = None
+CONFIG: Config = None
 
 def init_config(fp: str) -> None:
     """Initialize a Config object. Does nothing if a Config object is already initialized."""
-    global config
-    if config is not None: return
-    config = Config.create_from_json(fp)
+    global CONFIG
+    if CONFIG is not None: return
+    CONFIG = Config.create_from_json(fp)
 
 def reload_config() -> None:
     """Reloads config by loading it from file again."""
-    global config
-    fp = config._fp
-    config = Config.create_from_json(fp)
+    global CONFIG
+    fp = CONFIG._fp
+    CONFIG = Config.create_from_json(fp)
 
 def update_config(**kwargs) -> None:
     """Updates config using provided kwargs and writes it to file."""
-    global config
-    config.update(**kwargs)
+    global CONFIG
+    CONFIG.update(**kwargs)
