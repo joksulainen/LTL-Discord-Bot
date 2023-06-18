@@ -26,7 +26,7 @@ class Persistence:
             if getattr(self, k, None) is None: continue
             setattr(self, k, v)
         with open(self._fp, "w") as file:
-            file.write(json.dumps({k:v for (k,v) in self.__dict__.items() if k!="_fp"}, indent=4))
+            file.write(json.dumps({k:v for k,v in self.__dict__.items() if k!="_fp"}, indent=4))
     
     @classmethod
     def create_from_json(cls: Type[Self], fp: str) -> Tuple[Self, bool]:
