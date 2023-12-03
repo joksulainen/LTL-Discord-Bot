@@ -7,9 +7,8 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationCommandInvokeError, ApplicationContext
 
-import handlers.config
-import handlers.persistence
-import permission_decorators
+import helpers
+from helpers.json_wrappers import init_config, init_persistence, CONFIG
 
 # Print version and platform stuff
 print("Python version:", platform.python_version())
@@ -41,9 +40,9 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
             await ctx.respond("You need to fulfill atleast one of these conditions to use this command:\n{}".format("".join(f'`{i}`\n' for i in error.errors)), ephemeral=True)
         case extCommands.errors.CommandOnCooldown:
             await ctx.respond(f"Command is on cooldown, try again in {error.retry_after:.2f}s", ephemeral=True)
-        case permission_decorators.NotAdmin:
+        case helpers.NotAdmin:
             await ctx.respond("You're not an admin of the bot", ephemeral=True)
-        case permission_decorators.NotModerator:
+        case helpers.NotModerator:
             await ctx.respond("You're not a moderator of the bot", ephemeral=True)
         case _:
             error_string = "".join(traceback.format_exception(type(error), error, error.__traceback__))[:-1]
@@ -55,10 +54,10 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
 # Setup function
 def setup():
     print("Loading config...")
-    handlers.config.init_config("./config.json")
+    init_config("./config.json")
     print("Config loaded!")
     print("Loading persistent data...")
-    result = handlers.persistence.init_persistence("./persistence.json")
+    result = init_persistence("./persistence.json")
     print("Loaded existing persistent data!" if result else "Generated new persistent file.")
     print("Loading cogs...")
     for filename in os.listdir("./cogs"):
@@ -71,4 +70,4 @@ def setup():
 if __name__ == "__main__":
     setup()
     print("Starting bot with token...")
-    BOT.run(handlers.config.CONFIG.token)
+    BOT.run(CONFIG.token)
