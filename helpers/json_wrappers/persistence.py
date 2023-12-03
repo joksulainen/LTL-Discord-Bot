@@ -45,9 +45,9 @@ class Persistence:
 PERSISTENCE: Persistence = None
 
 def init_persistence(fp: str) -> bool | None:
-    """Initialize a Persistence object. Does nothing if a Persistence object is already initialized.
+    """Initialize a `Persistence` object. Does nothing if a `Persistence` object is already initialized.
     
-    Returns None if nothing happened. Returns True if loaded from existing file."""
+    Returns `None` if nothing happened. Returns `True` if loaded from existing file."""
     global PERSISTENCE
     if PERSISTENCE is not None: return
     PERSISTENCE, result = Persistence.create_from_json(fp)

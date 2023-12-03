@@ -46,7 +46,7 @@ class Config:
 CONFIG: Config = None
 
 def init_config(fp: str) -> None:
-    """Initialize a Config object. Does nothing if a Config object is already initialized."""
+    """Initialize a `Config` object. Does nothing if a `Config` object is already initialized."""
     global CONFIG
     if CONFIG is not None: return
     CONFIG = Config.create_from_json(fp)
