@@ -1,6 +1,6 @@
 import discord
-from discord import ApplicationContext, Option, slash_command
 import discord.ext.commands as extCommands
+from discord import ApplicationContext, Option, slash_command
 
 import handlers.config
 from handlers.config import CONFIG

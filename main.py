@@ -4,13 +4,12 @@ import sys
 import traceback
 
 import discord
-from discord import ApplicationContext, ApplicationCommandInvokeError
 import discord.ext.commands as extCommands
+from discord import ApplicationCommandInvokeError, ApplicationContext
 
 import handlers.config
 import handlers.persistence
 import permission_decorators
-
 
 # Print version and platform stuff
 print("Python version:", platform.python_version())

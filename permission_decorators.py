@@ -1,4 +1,4 @@
-from discord.ext.commands import CheckFailure, check, Context
+from discord.ext.commands import CheckFailure, Context, check
 
 from handlers.config import CONFIG
 

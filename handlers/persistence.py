@@ -2,8 +2,7 @@ import json
 import sys
 import time
 from dataclasses import dataclass, field
-from typing import Self, Type, Tuple
-
+from typing import Self, Tuple, Type
 
 DEFAULT = {
     "participants": list(),

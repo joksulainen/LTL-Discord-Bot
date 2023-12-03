@@ -3,7 +3,6 @@ import sys
 from dataclasses import dataclass, field
 from typing import Self, Type
 
-
 DEFAULT = {
     "token": "",
     "guild_id": 0,
