@@ -28,16 +28,16 @@ class Config:
             if getattr(self, k, None) is None: continue
             setattr(self, k, v)
         with open(self._fp, "w") as file:
-            file.write(json.dumps({k:v for k,v in self.__dict__.items() if k!="_fp"}, indent=4))
+            file.write(json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4))
     
     @classmethod
     def create_from_json(cls: Type[Self], fp: str) -> Self:
         try:
             with open(fp, "r") as file:
-                data = json.loads(file.read())
+                data = json.load(file)
         except FileNotFoundError:
             with open(fp, "w") as file:
-                file.write(json.dumps(DEFAULT, indent=4))
+                file.write(json.dump(DEFAULT, file, indent=4))
             sys.exit(f"Created new config at '{fp}'. Fill out the 'token' and 'guild_id' fields before starting the script again.")
         return cls(_fp=fp, **data)
 

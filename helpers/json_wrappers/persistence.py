@@ -25,17 +25,17 @@ class Persistence:
             if getattr(self, k, None) is None: continue
             setattr(self, k, v)
         with open(self._fp, "w") as file:
-            file.write(json.dumps({k:v for k,v in self.__dict__.items() if k!="_fp"}, indent=4))
+            file.write(json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4))
     
     @classmethod
     def create_from_json(cls: Type[Self], fp: str) -> tuple[Self, bool]:
         success = True
         try:
             with open(fp, "r") as file:
-                data = json.loads(file.read())
+                data = json.load(file)
         except FileNotFoundError:
             with open(fp, "w") as file:
-                file.write(json.dumps(DEFAULT, indent=4))
+                json.dump(DEFAULT, file, indent=4)
             success = False
             data = dict(DEFAULT)
         return cls(_fp=fp, **data), success
