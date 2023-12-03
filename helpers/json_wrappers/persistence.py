@@ -2,7 +2,7 @@ import json
 import sys
 import time
 from dataclasses import dataclass, field
-from typing import Self, Tuple, Type
+from typing import Self, Type
 
 DEFAULT = {
     "participants": list(),
@@ -28,7 +28,7 @@ class Persistence:
             file.write(json.dumps({k:v for k,v in self.__dict__.items() if k!="_fp"}, indent=4))
     
     @classmethod
-    def create_from_json(cls: Type[Self], fp: str) -> Tuple[Self, bool]:
+    def create_from_json(cls: Type[Self], fp: str) -> tuple[Self, bool]:
         success = True
         try:
             with open(fp, "r") as file:
