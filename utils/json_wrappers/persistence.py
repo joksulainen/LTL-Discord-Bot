@@ -48,7 +48,7 @@ def create_persistence(fp: str) -> tuple[Persistence, bool]:
     if not success:
         with open(fp, "w") as file:
             json.dump(DEFAULT_PERSISTENCE, file, indent=4)
-        persistence = Persistence(_fp=fp, **DEFAULT_PERSISTENCE.copy())
+        persistence = Persistence(_fp=fp, **DEFAULT_PERSISTENCE)
     return persistence, success
 
 def update_persistence(persistence: Persistence, **kwargs) -> None:
