@@ -2,8 +2,8 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationContext, Option, slash_command
 
-from helpers import is_admin
-from helpers.json_wrappers import CONFIG, reload_config
+from utils import is_admin
+from utils.json_wrappers import CONFIG, reload_config
 
 
 class CConfiguration(extCommands.Cog, name=__name__, guild_ids=[CONFIG.guild_id]):

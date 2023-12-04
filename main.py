@@ -7,8 +7,8 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationCommandInvokeError, ApplicationContext
 
-import helpers
-from helpers.json_wrappers import init_config, init_persistence, CONFIG
+import utils
+from utils.json_wrappers import init_config, init_persistence, CONFIG
 
 # Print version and platform stuff
 print("Python version:", platform.python_version())
@@ -40,9 +40,9 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
             await ctx.respond("You need to fulfill atleast one of these conditions to use this command:\n{}".format("".join(f'`{i}`\n' for i in error.errors)), ephemeral=True)
         case extCommands.errors.CommandOnCooldown:
             await ctx.respond(f"Command is on cooldown, try again in {error.retry_after:.2f}s", ephemeral=True)
-        case helpers.NotAdmin:
+        case utils.NotAdmin:
             await ctx.respond("You're not an admin of the bot", ephemeral=True)
-        case helpers.NotModerator:
+        case utils.NotModerator:
             await ctx.respond("You're not a moderator of the bot", ephemeral=True)
         case _:
             error_string = "".join(traceback.format_exception(type(error), error, error.__traceback__))[:-1]

@@ -1,6 +1,6 @@
 from discord.ext.commands import CheckFailure, Context, check
 
-from helpers.json_wrappers import CONFIG
+from utils.json_wrappers import CONFIG
 
 
 def is_admin():

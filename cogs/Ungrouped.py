@@ -2,8 +2,8 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationContext, Option, slash_command
 
-from helpers.json_wrappers import CONFIG
-from helpers import is_admin, is_moderator
+from utils.json_wrappers import CONFIG
+from utils import is_admin, is_moderator
 
 
 class CUngrouped(extCommands.Cog, name=__name__, guild_ids=[CONFIG.guild_id]):

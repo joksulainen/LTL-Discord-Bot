@@ -2,7 +2,7 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationContext, Option, slash_command
 
-from helpers.json_wrappers import CONFIG
+from utils.json_wrappers import CONFIG
 
 
 class CTemplate(extCommands.Cog, name=__name__, guild_ids=[CONFIG.guild_id]):
