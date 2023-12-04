@@ -3,22 +3,16 @@ import discord.ext.commands as extCommands
 from discord import ApplicationContext, Option, slash_command
 
 from utils import is_admin
-from utils.json_wrappers import CONFIG, reload_config
 
 
-class CConfiguration(extCommands.Cog, name=__name__, guild_ids=[CONFIG.guild_id]):
+class CConfiguration(extCommands.Cog, name=__name__):
     def __init__(self, bot: discord.Bot):
         self.BOT = bot
+        self.__cog_guild_ids__ = [bot.config.guild_id]
     
     
     # Application commands
     GROUP = discord.SlashCommandGroup("config", "Base command")
-    
-    @GROUP.command(name="reload")
-    async def config_reload(self, ctx: ApplicationContext):
-        """Reload config"""
-        reload_config()
-        await ctx.respond("Config reloaded", ephemeral=True)
     
     
     ADMIN_GROUP = GROUP.subgroup("admin", "Manage bot admins")

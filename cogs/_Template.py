@@ -2,12 +2,11 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationContext, Option, slash_command
 
-from utils.json_wrappers import CONFIG
 
-
-class CTemplate(extCommands.Cog, name=__name__, guild_ids=[CONFIG.guild_id]):
+class CTemplate(extCommands.Cog, name=__name__):
     def __init__(self, bot: discord.Bot):
         self.BOT = bot
+        self.__cog_guild_ids__ = [bot.config.guild_id]
 
 
 # Extension related functions

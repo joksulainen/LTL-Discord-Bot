@@ -1,3 +1,4 @@
+import json
 import os
 import platform
 import sys
@@ -8,7 +9,13 @@ import discord.ext.commands as extCommands
 from discord import ApplicationCommandInvokeError, ApplicationContext
 
 import utils
-from utils.json_wrappers import init_config, init_persistence, CONFIG
+from utils.json_wrappers import create_config, create_persistence, DEFAULT_CONFIG
+from bot import LTVBot
+
+
+CONFIG_PATH = "./config.json"
+PERSISTENCE_PATH = "./persistence.json"
+
 
 # Print version and platform stuff
 print("Python version:", platform.python_version())
@@ -54,11 +61,19 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
 # Setup function
 def setup():
     print("Loading config...")
-    init_config("./config.json")
+    config = create_config(CONFIG_PATH)
+    if config is None:
+        with open(CONFIG_PATH, "w") as file:
+            file.write(json.dump(DEFAULT_CONFIG, file, indent=4))
+        print(f"Created new config at '{CONFIG_PATH}'. Fill out the 'token' and 'guild_id' fields before starting the script again.")
+        os.system("pause")
+        sys.exit()
+    BOT.config = config
     print("Config loaded!")
     print("Loading persistent data...")
-    result = init_persistence("./persistence.json")
-    print("Loaded existing persistent data!" if result else "Generated new persistent file.")
+    persistence, success = create_persistence(PERSISTENCE_PATH)
+    BOT.persistence = persistence
+    print("Loaded existing persistent data!" if success else "Generated new persistent file.")
     print("Loading cogs...")
     for filename in os.listdir("./cogs"):
         if filename.endswith(".py") and not filename.startswith("_"):
@@ -70,4 +85,4 @@ def setup():
 if __name__ == "__main__":
     setup()
     print("Starting bot with token...")
-    BOT.run(CONFIG.token)
+    BOT.run(BOT.config.token)

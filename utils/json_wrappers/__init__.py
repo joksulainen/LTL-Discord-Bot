@@ -1,2 +1,2 @@
-from .config import init_config, update_config, reload_config, CONFIG
-from .persistence import init_persistence, update_persistence, PERSISTENCE
+from .config import Config, DEFAULT_CONFIG, create_config, update_config
+from .persistence import Persistence, DEFAULT_PERSISTENCE, create_persistence, update_persistence

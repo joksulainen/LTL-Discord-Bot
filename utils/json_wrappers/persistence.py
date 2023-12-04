@@ -2,9 +2,10 @@ import json
 import sys
 import time
 from dataclasses import dataclass, field
-from typing import Self, Type
+from typing import Self
 
-DEFAULT = {
+
+DEFAULT_PERSISTENCE = {
     "participants": list(),
     "event_channel": 0,
     "starting_time": 0,
@@ -21,39 +22,35 @@ class Persistence:
     
     
     def update(self: Self, **kwargs) -> None:
+        """Updates the fields using the given kwargs. Keys that don't match a field are ignored."""
         for k, v in kwargs.items():
             if getattr(self, k, None) is None: continue
             setattr(self, k, v)
         with open(self._fp, "w") as file:
-            file.write(json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4))
+            json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4)
     
     @classmethod
-    def create_from_json(cls: Type[Self], fp: str) -> tuple[Self, bool]:
-        success = True
+    def create_from_json(cls: type[Self], fp: str) -> Self | None:
+        """Creates an object using the given file path. Returns `None` if file path doesn't exist or isn't json."""
         try:
             with open(fp, "r") as file:
                 data = json.load(file)
         except FileNotFoundError:
-            with open(fp, "w") as file:
-                json.dump(DEFAULT, file, indent=4)
-            success = False
-            data = dict(DEFAULT)
-        return cls(_fp=fp, **data), success
+            return None
+        return cls(_fp=fp, **data)
 
 
-# Functions to handle persistent data manipulation
-PERSISTENCE: Persistence = None
+# Helper functions
+def create_persistence(fp: str) -> tuple[Persistence, bool]:
+    """Creates a `Persistence` object and returns it with success for loading from existing file."""
+    persistence = Persistence.create_from_json(fp)
+    success = persistence is not None
+    if not success:
+        with open(fp, "w") as file:
+            json.dump(DEFAULT_PERSISTENCE, file, indent=4)
+        persistence = Persistence(_fp=fp, **DEFAULT_PERSISTENCE.copy())
+    return persistence, success
 
-def init_persistence(fp: str) -> bool | None:
-    """Initialize a `Persistence` object. Does nothing if a `Persistence` object is already initialized.
-    
-    Returns `None` if nothing happened. Returns `True` if loaded from existing file."""
-    global PERSISTENCE
-    if PERSISTENCE is not None: return
-    PERSISTENCE, result = Persistence.create_from_json(fp)
-    return result
-
-def update_persistence(**kwargs) -> None:
-    """Updates persistence using provided kwargs and writes it to file."""
-    global PERSISTENCE
-    PERSISTENCE.update(**kwargs)
+def update_persistence(persistence: Persistence, **kwargs) -> None:
+    """Updates provided `Persistence` object using provided kwargs and writes it to file."""
+    persistence.update(**kwargs)
