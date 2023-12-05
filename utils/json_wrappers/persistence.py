@@ -8,8 +8,8 @@ from typing import Self
 DEFAULT_PERSISTENCE = {
     "participants": list(),
     "event_channel": 0,
-    "starting_time": 0,
-    "ending_time": 0
+    "starting_time": 0.0,
+    "ending_time": 0.0
 }
 
 @dataclass(kw_only=True)
