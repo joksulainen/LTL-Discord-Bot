@@ -10,7 +10,6 @@ from discord import ApplicationCommandInvokeError, ApplicationContext
 
 import utils
 from utils.json_wrappers import create_config, create_persistence, DEFAULT_CONFIG
-from bot import LTVBot
 
 
 CONFIG_PATH = "./config.json"
@@ -64,7 +63,7 @@ def setup():
     config = create_config(CONFIG_PATH)
     if config is None:
         with open(CONFIG_PATH, "w") as file:
-            file.write(json.dump(DEFAULT_CONFIG, file, indent=4))
+            json.dump(DEFAULT_CONFIG, file, indent=4)
         print(f"Created new config at '{CONFIG_PATH}'. Fill out the 'token' and 'guild_id' fields before starting the script again.")
         os.system("pause")
         sys.exit()

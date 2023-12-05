@@ -15,7 +15,7 @@ class CConfiguration(extCommands.Cog, name=__name__):
     GROUP = discord.SlashCommandGroup("config", "Base command")
     
     
-    ADMIN_GROUP = GROUP.subgroup("admin", "Manage bot admins")
+    ADMIN_GROUP = GROUP.create_subgroup("admin", "Manage bot admins")
     @ADMIN_GROUP.command(name="add", options=[Option(discord.User, name="user")])
     @extCommands.is_owner()
     async def config_admin_add(self, ctx: ApplicationContext, user: discord.User):
@@ -29,7 +29,7 @@ class CConfiguration(extCommands.Cog, name=__name__):
         await ctx.respond(f"Admin remove test ({user.id})", ephemeral=True)
     
     
-    MODERATOR_GROUP = GROUP.subgroup("moderator", "Manage bot moderators")
+    MODERATOR_GROUP = GROUP.create_subgroup("moderator", "Manage bot moderators")
     @MODERATOR_GROUP.command(name="add", options=[Option(discord.User, name="user")])
     @is_admin()
     async def config_moderator_add(self, ctx: ApplicationContext, user: discord.User):
