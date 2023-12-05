@@ -1,4 +1,3 @@
-import json
 import os
 import platform
 import sys
@@ -9,7 +8,7 @@ import discord.ext.commands as extCommands
 from discord import ApplicationCommandInvokeError, ApplicationContext
 
 import utils
-from utils.json_wrappers import create_config, create_persistence, DEFAULT_CONFIG
+from utils.json_wrappers import create_config, create_persistence
 
 
 CONFIG_PATH = "./config.json"
@@ -59,13 +58,7 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
 # Setup function
 def setup():
     print("Loading config...")
-    config = create_config(CONFIG_PATH)
-    if config is None:
-        with open(CONFIG_PATH, "w") as file:
-            json.dump(DEFAULT_CONFIG, file, indent=4)
-        print(f"Created new config at '{CONFIG_PATH}'. Fill out the 'token' and 'guild_id' fields before starting the script again.")
-        os.system("pause")
-        sys.exit()
+    config = create_config(CONFIG_PATH, handle_write=True)
     BOT.config = config
     print("Config loaded!")
     print("Loading persistent data...")
