@@ -62,7 +62,7 @@ def setup():
     BOT.config = config
     print("Config loaded!")
     print("Loading persistent data...")
-    persistence, success = create_persistence(PERSISTENCE_PATH)
+    persistence, success = create_persistence(PERSISTENCE_PATH, return_success=True)
     BOT.persistence = persistence
     print("Loaded existing persistent data!" if success else "Generated new persistent file.")
     print("Loading cogs...")
