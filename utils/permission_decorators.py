@@ -2,17 +2,17 @@ from discord.ext.commands import CheckFailure, Context, check
 
 
 def is_admin():
-    def predicate(ctx: Context) -> bool:
+    async def predicate(ctx: Context) -> bool:
         if (not ctx.author.id in ctx.bot.config.admin_ids and
-            not (ctx.author.id == ctx.bot.owner_id or ctx.author.id in ctx.bot.owner_ids)):
+            not await ctx.bot.is_owner(ctx.author)):
             raise NotAdmin()
         return True
     return check(predicate)
 
 def is_moderator():
-    def predicate(ctx: Context) -> bool:
+    async def predicate(ctx: Context) -> bool:
         if (not (ctx.author.id in ctx.bot.config.moderator_ids + ctx.bot.config.admin_ids) and
-            not (ctx.author.id == ctx.bot.owner_id or ctx.author.id in ctx.bot.owner_ids)):
+            not await ctx.bot.is_owner(ctx.author)):
             raise NotModerator()
         return True
     return check(predicate)

@@ -38,23 +38,22 @@ async def on_ready():
 @BOT.event
 async def on_application_command_error(ctx: ApplicationContext, error: ApplicationCommandInvokeError):
     match error:
-        case extCommands.errors.MissingPermissions:
-            await ctx.respond(f"You're missing the following permissions to use this command: {', '.join(error.missing_permissions)}", ephemeral=True)
-        case extCommands.errors.NotOwner:
-            await ctx.respond("You're not the owner of the bot", ephemeral=True)
-        case extCommands.errors.CheckAnyFailure:
+        case extCommands.errors.CheckAnyFailure():
             await ctx.respond("You need to fulfill atleast one of these conditions to use this command:\n{}".format("".join(f'`{i}`\n' for i in error.errors)), ephemeral=True)
-        case extCommands.errors.CommandOnCooldown:
+        case extCommands.errors.MissingPermissions():
+            await ctx.respond(f"You're missing the following permissions to use this command: {', '.join(error.missing_permissions)}", ephemeral=True)
+        case extCommands.errors.NotOwner():
+            await ctx.respond("You're not the owner of the bot", ephemeral=True)
+        case extCommands.errors.CommandOnCooldown():
             await ctx.respond(f"Command is on cooldown, try again in {error.retry_after:.2f}s", ephemeral=True)
-        case utils.NotAdmin:
+        case utils.permission_decorators.NotAdmin():
             await ctx.respond("You're not an admin of the bot", ephemeral=True)
-        case utils.NotModerator:
+        case utils.permission_decorators.NotModerator():
             await ctx.respond("You're not a moderator of the bot", ephemeral=True)
         case _:
             error_string = "".join(traceback.format_exception(type(error), error, error.__traceback__))[:-1]
             print(error_string, file=sys.stderr)
-            message_format = f"__**An error has occurred!**__\n```{error_string}```"
-            await ctx.respond(message_format, ephemeral=True)
+            await ctx.respond("Something went wrong!", ephemeral=True)
 
 
 # Setup function
