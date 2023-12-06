@@ -36,7 +36,7 @@ def create_config(fp: str, *, handle_write: bool = False) -> Config | None:
     if config is None:
         with open(fp, "w") as file:
             json.dump(DEFAULT_CONFIG, file, indent=4)
-        print(f"Created new config at '{fp}'. Fill out the 'token' and 'guild_id' fields before starting the script again.\n"\
+        print(f"Created new config at '{fp}'. Fill out the 'token' and 'guild_id' fields before starting the script again.\n" \
                 "Not doing so will cause the script to run into an error.")
         os.system("pause")
         sys.exit()
