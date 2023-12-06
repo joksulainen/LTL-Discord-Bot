@@ -38,9 +38,11 @@ async def on_ready():
 async def on_application_command_error(ctx: ApplicationContext, error: ApplicationCommandInvokeError):
     match error:
         case extCommands.errors.CheckAnyFailure():
-            await ctx.respond("You need to fulfill atleast one of these conditions to use this command:\n{}".format("".join(f'`{i}`\n' for i in error.errors)), ephemeral=True)
+            await ctx.respond("You need to fulfill atleast one of these conditions to use this command:\n{}"
+                                .format("".join(f'`{i}`\n' for i in error.errors)), ephemeral=True)
         case extCommands.errors.MissingPermissions():
-            await ctx.respond(f"You're missing the following permissions to use this command: {', '.join(error.missing_permissions)}", ephemeral=True)
+            await ctx.respond("You're missing the following permissions to use this command: " \
+                                f"{', '.join(error.missing_permissions)}", ephemeral=True)
         case extCommands.errors.NotOwner():
             await ctx.respond("You're not the owner of the bot", ephemeral=True)
         case extCommands.errors.CommandOnCooldown():
@@ -76,4 +78,7 @@ def setup():
 if __name__ == "__main__":
     setup()
     print("Starting bot with token...")
-    BOT.run(BOT.config.token)
+    try:
+        BOT.run(BOT.config.token)
+    except discord.errors.LoginFailure:
+        print("Improper token passed to bot. Did you forget to change the token field in your config file?")
