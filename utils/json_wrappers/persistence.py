@@ -4,6 +4,8 @@ import time
 from dataclasses import dataclass, field
 from typing import Self
 
+from .base import BaseJSONWrapper
+
 
 DEFAULT_PERSISTENCE = {
     "participants": list(),
@@ -13,31 +15,11 @@ DEFAULT_PERSISTENCE = {
 }
 
 @dataclass(kw_only=True)
-class Persistence:
-    _fp: str
+class Persistence(BaseJSONWrapper):
     participants: list[int] = field(default_factory=list)
     event_channel: int
     starting_time: float
     ending_time: float
-    
-    
-    def update(self: Self, **kwargs) -> None:
-        """Updates the fields using the given kwargs. Keys that don't match a field are ignored."""
-        for k, v in kwargs.items():
-            if getattr(self, k, None) is None: continue
-            setattr(self, k, v)
-        with open(self._fp, "w") as file:
-            json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4)
-    
-    @classmethod
-    def create_from_json(cls: type[Self], fp: str) -> Self | None:
-        """Creates an object using the given file path. Returns `None` if file path doesn't exist or isn't json."""
-        try:
-            with open(fp, "r") as file:
-                data = json.load(file)
-        except FileNotFoundError:
-            return None
-        return cls(_fp=fp, **data)
 
 
 # Helper functions
