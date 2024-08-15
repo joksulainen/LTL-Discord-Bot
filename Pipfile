@@ -4,9 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-py-cord = "==2.4.1"
+py-cord = "==2.6.0"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"
