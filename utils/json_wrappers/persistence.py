@@ -2,7 +2,6 @@ import json
 import sys
 import time
 from dataclasses import dataclass, field
-from typing import Self
 
 from .base import BaseJSONWrapper
 
@@ -17,9 +16,9 @@ DEFAULT_PERSISTENCE = {
 @dataclass(kw_only=True)
 class Persistence(BaseJSONWrapper):
     participants: list[int] = field(default_factory=list)
-    event_channel: int
-    starting_time: float
-    ending_time: float
+    event_channel: int = 0
+    starting_time: float = 0.0
+    ending_time: float = 0.0
 
 
 # Helper functions

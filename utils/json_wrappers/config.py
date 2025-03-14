@@ -2,7 +2,6 @@ import json
 import sys
 import os
 from dataclasses import dataclass, field
-from typing import Self
 
 from .base import BaseJSONWrapper
 

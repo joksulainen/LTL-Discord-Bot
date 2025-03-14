@@ -7,6 +7,7 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationCommandInvokeError, ApplicationContext
 
+from LTLBot import LTLBot
 import utils
 from utils.json_wrappers import create_config, create_persistence
 
@@ -22,11 +23,12 @@ print("-------------------")
 
 
 # Initialize intents and bot instance
-intents = discord.Intents.none()
-intents.guilds = True
-intents.guild_reactions = True
+intents = discord.Intents(
+    guilds = True,
+    guild_reactions = True
+)
 
-BOT = discord.Bot(intents=intents)
+BOT = LTLBot(intents=intents)
 
 
 # Event listeners
