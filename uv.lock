@@ -99,7 +99,7 @@ wheels = [
 ]
 
 [[package]]
-name = "last-to-leave-bot"
+name = "ltv-discord-bot"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
