@@ -10,10 +10,9 @@ DEFAULT_CONFIG = {
     "$schema": "./ltl-bot-config.schema.json",
     "token": "",
     "guild_id": 0,
-    "admin_ids": list(),
-    "moderator_ids": list(),
     "afk_interval_min_mins": 10.0,
-    "afk_interval_max_mins": 20.0
+    "afk_interval_max_mins": 20.0,
+    "admin_ids": list(),
 }
 
 @dataclass(kw_only=True)
@@ -23,10 +22,9 @@ class Config(BaseJSONWrapper):
     afk_interval_min_mins: float = field(default=DEFAULT_CONFIG["afk_interval_min_mins"])
     afk_interval_max_mins: float = field(default=DEFAULT_CONFIG["afk_interval_max_mins"])
     admin_ids: list[int] = field(default_factory=list)
-    moderator_ids: list[int] = field(default_factory=list)
     
     
-    def __init__(self: Self):
+    def __post_init__(self: Self):
         self.__setattr__("$schema", DEFAULT_CONFIG["$schema"])
 
 
