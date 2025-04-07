@@ -14,14 +14,14 @@ class BaseJSONWrapper:
             if getattr(self, k, None) is None: continue
             setattr(self, k, v)
         with open(self._fp, "w") as file:
-            json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4)
+            json.dump({k:v for k,v in self.__dict__.items() if k!="_fp"}, file, indent=4, **kwargs)
     
     @classmethod
-    def create_from_json(cls: type[Self], fp: str) -> Self | None:
+    def create_from_json(cls: type[Self], fp: str, **kwargs) -> Self | None:
         """Creates an object using the given file path. Returns `None` if file path doesn't exist or isn't JSON."""
         try:
             with open(fp, "r") as file:
-                data = json.load(file)
+                data = json.load(file, **kwargs)
         except FileNotFoundError:
             return None
         return cls(_fp=fp, **data)
