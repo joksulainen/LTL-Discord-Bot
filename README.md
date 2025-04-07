@@ -13,7 +13,7 @@ This project is not produciton ready and should not be used.
 
 1. Install Python 3.13 and/or uv through your preferred method.
 1. Install program dependencies.
-    - UV:
+    - uv:
         - Run `uv sync` in project root.
     - requirements.txt:
         - Run `pip install -r ./requirements.txt` in project root, preferably inside a venv to not bloat the system install.
