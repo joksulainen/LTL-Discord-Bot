@@ -7,7 +7,7 @@ I won't be upset if people choose to fork and continue work without me whether i
 
 ## DISCLAIMER
 
-This project is not produciton ready and should not be used.
+This project is not production ready and should not be used.
 
 ## How to use
 
