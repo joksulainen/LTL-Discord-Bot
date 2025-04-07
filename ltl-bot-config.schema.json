@@ -1,0 +1,39 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "title": "LTL Bot Config",
+    "description": "Schema describing the contents of the Discord bot config file.",
+    "type": "object",
+    "properties": {
+        "token": {
+            "type": "string",
+            "description": "The token that the Discord bot will use."
+        },
+        "guild_id": {
+            "type": "integer",
+            "description": "ID of the Discord server that the bot will operate in. This is used to register commands specifically for that Discord server."
+        },
+        "afk_interval_min_mins": {
+            "type": "number",
+            "description": "The minimum minutes for an AFK check to occur."
+        },
+        "afk_interval_max_mins": {
+            "type": "number",
+            "description": "The maximum minutes for an AFK check to occur."
+        },
+        "admin_ids": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            },
+            "description": "Array of user IDs with admin privileges for the bot commands.",
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "token",
+        "guild_id",
+        "afk_interval_min_mins",
+        "afk_interval_max_mins",
+        "admin_ids"
+    ]
+}
