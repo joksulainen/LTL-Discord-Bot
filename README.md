@@ -17,9 +17,10 @@ This project is not production ready and should not be used.
         - Run `uv sync` in project root.
     - requirements.txt:
         - Run `pip install -r ./requirements.txt` in project root, preferably inside a venv to not bloat the system install.
-1. Run `main.py` once.
+1. Run `Start bot.bat` once.
+    - Use the `.sh` script on Linux based systems.
 1. Open `config.json` and fill `token` and `guild_id` fields.
-1. Run `main.py` again.
+1. Run `Start bot.bat` again.
 
 ## How to contribute or continue work
 

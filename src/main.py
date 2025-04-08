@@ -65,7 +65,7 @@ def setup():
     BOT.persistence = persistence
     print("Loaded existing persistent data!" if success else "Generated new persistent file.")
     print("Loading cogs...")
-    for filename in os.listdir("./cogs"):
+    for filename in os.listdir(f"{os.path.dirname(__file__)}/cogs"):
         if filename.endswith(".py") and not filename.startswith("_"):
             BOT.load_extension(f"cogs.{filename[:-3]}")
             print(f"Loaded {filename[:-3]}")
