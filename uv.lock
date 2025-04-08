@@ -139,7 +139,7 @@ wheels = [
 ]
 
 [[package]]
-name = "ltv-discord-bot"
+name = "ltl-discord-bot"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
