@@ -17,7 +17,7 @@ class BaseJSONWrapper:
     def update(self: Self, *, cls: type[json.JSONEncoder] | None = None, **kwargs) -> None:
         """Updates the fields using the given kwargs. Keys that don't match a field are ignored.
         
-        `cls`: A JSONEncoder object that will be used to encode the class to JSON with."""
+        `cls`: A JSONEncoder class that will be used to encode the class to JSON with."""
         for k, v in kwargs.items():
             if k not in self.__annotations__: continue
             setattr(self, k, v)
@@ -25,11 +25,13 @@ class BaseJSONWrapper:
             json.dump({k:v for k,v in (self.__dict__.items() + self._data.items()) if not (k=="_fp" or k=="_data")}, file, indent=4, cls=cls)
     
     @classmethod
-    def create_from_json(_cls: type[Self], fp: str, **kwargs) -> Self | None:
-        """Creates an object using the given file path. Returns `None` if file path doesn't exist or isn't JSON."""
+    def create_from_json(_cls: type[Self], fp: str, *, cls: type[json.JSONDecoder] | None = None, **kwargs) -> Self | None:
+        """Creates an object using the given file path. Returns `None` if file path doesn't exist or isn't JSON.
+        
+        `cls`: A JSONDecoder class that will be used to decode the JSON to Python objects with."""
         try:
             with open(fp, "r") as file:
-                data: dict[str, Any] = json.load(file, **kwargs)
+                data: dict[str, Any] = json.load(file, cls=cls, **kwargs)
         except FileNotFoundError:
             return None
         _data = {k:v for k,v in data.items() if k not in _cls.__annotations__}
