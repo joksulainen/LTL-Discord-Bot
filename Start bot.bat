@@ -1,4 +1,13 @@
 @echo off
 
-REM will try to get this to dynamically use uv if its installed at some point
-"./.venv/Scripts/python.exe" ./src/main.py
+where /Q uv.exe
+if ERRORLEVEL 0 (
+    echo Running bot using uv
+    uv run ./src/main.py
+) else if exist "./.venv/Scripts/python.exe" (
+    echo Running bot using .venv
+    "./.venv/Scripts/python.exe" ./src/main.py
+) else (
+    echo Running bot using py
+    py ./src/main.py
+)
