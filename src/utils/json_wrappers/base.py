@@ -1,5 +1,5 @@
 import json
-from dataclasses import dataclass, field, fields
+from dataclasses import dataclass, field
 from typing import Self, Any
 
 
@@ -15,12 +15,14 @@ class BaseJSONWrapper:
     
     
     def update(self: Self, *, cls: type[json.JSONEncoder] | None = None, **kwargs) -> None:
-        """Updates the fields using the given kwargs. Keys that don't match a field are ignored."""
+        """Updates the fields using the given kwargs. Keys that don't match a field are ignored.
+        
+        `cls`: A JSONEncoder object that will be used to encode the class to JSON with."""
         for k, v in kwargs.items():
-            if getattr(self, k, None) is None: continue
+            if k not in self.__annotations__: continue
             setattr(self, k, v)
         with open(self._fp, "w") as file:
-            json.dump({k:v for k,v in (self._data.items() + self.__dict__.items()) if k in self.__annotations__}, file, indent=4, cls=cls)
+            json.dump({k:v for k,v in (self.__dict__.items() + self._data.items()) if not (k=="_fp" or k=="_data")}, file, indent=4, cls=cls)
     
     @classmethod
     def create_from_json(_cls: type[Self], fp: str, **kwargs) -> Self | None:
