@@ -21,7 +21,7 @@ class CogConfiguration(extCommands.Cog, name=__name__):
     
     
     # Application commands
-    GROUP = discord.SlashCommandGroup("config", "Base command")
+    GROUP = discord.SlashCommandGroup("config")
     
     
     PERMISSION_GROUP = GROUP.create_subgroup("permission", "Manage user permissions for bot")

@@ -12,9 +12,12 @@ class CogEventControl(extCommands.Cog, name=__name__):
 
 
     # Application commands
-    @slash_command()
+    GROUP = discord.SlashCommandGroup("event")
+    
+    
+    @GROUP.command(name="hello_world")
     async def event_hello_world(self, ctx: ApplicationContext):
-        """Hello world!"""
+        """EventControl: Hello world!"""
         await ctx.respond("Hello world from the EventControl group!", ephemeral=True)
 
 
