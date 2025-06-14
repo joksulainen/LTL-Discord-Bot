@@ -7,13 +7,6 @@ from utils import is_admin
 from utils.json_wrappers import update_config
 
 
-async def ac_permission(ctx: discord.AutocompleteContext):
-    if not await ctx.bot.is_owner(ctx.interaction.user):
-        return [OptionChoice("this command does nothing for you, go away", "")]
-    options = [OptionChoice("None", "none"), OptionChoice("Administrator", "admin")]
-    return options
-
-
 class CogConfiguration(extCommands.Cog, name=__name__):
     def __init__(self, bot: LTLBot):
         self.BOT = bot
@@ -24,24 +17,43 @@ class CogConfiguration(extCommands.Cog, name=__name__):
     GROUP = discord.SlashCommandGroup("config")
     
     
-    PERMISSION_GROUP = GROUP.create_subgroup("permission", "Manage user permissions for bot")
-    @PERMISSION_GROUP.command(name="set", options=[
-        Option(discord.User, name="user"), Option(str, name="permission", autocomplete=ac_permission)
+    ADMIN_GROUP = GROUP.create_subgroup("admin", "Manage bot admins")
+    
+    @ADMIN_GROUP.command(name="add", description="Give admin to a user", options=[
+        Option(discord.User, name="user", description="The user to give admin to")
     ])
     @extCommands.is_owner()
-    async def config_permission_set(self, ctx: ApplicationContext, user: discord.Member, permission: str):
-        """Set user permission for bot"""
-        output_str = ""
-        match permission:
-            case "admin":
-                pass
-            case "none" | _:
-                pass
-        await ctx.respond(output_str, ephemeral=True)
+    async def config_admin_add(self, ctx: ApplicationContext, user: discord.User):
+        if await self.BOT.is_owner(user):
+            await ctx.respond("Can't make yourself (the owner) an admin", ephemeral=True)
+            return
+        admin_ids = self.BOT.config.admin_ids
+        if user.id in admin_ids:
+            await ctx.respond(f"{user.mention} already has admin", ephemeral=True)
+            return
+        admin_ids.append(user.id)
+        update_config(self.BOT.config, admin_ids=admin_ids)
+        await ctx.respond(f"Admin given to {user.mention}", ephemeral=True)
     
-    @PERMISSION_GROUP.command(name="list", options=[])
+    @ADMIN_GROUP.command(name="remove" , description="Remove admin from a user", options=[
+        Option(discord.User, name="user", description="The user to remove admin from")
+    ])
+    @extCommands.is_owner()
+    async def config_admin_remove(self, ctx: ApplicationContext, user: discord.User):
+        if await self.BOT.is_owner(user):
+            await ctx.respond("Can't unmake yourself (the owner) an admin", ephemeral=True)
+            return
+        admin_ids = self.BOT.config.admin_ids
+        if user.id not in admin_ids:
+            await ctx.respond(f"{user.mention} doesn't have admin", ephemeral=True)
+            return
+        admin_ids.remove(user.id)
+        update_config(self.BOT.config, admin_ids=admin_ids)
+        await ctx.respond(f"Admin removed from {user.mention}", ephemeral=True)
+    
+    @ADMIN_GROUP.command(name="list", options=[])
     @is_admin()
-    async def config_permission_list(self, ctx: ApplicationContext):
+    async def config_admin_list(self, ctx: ApplicationContext):
         """List users with permissions on the bot"""
         users = list()
         if self.BOT.owner_id is None:
