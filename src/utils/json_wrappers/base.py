@@ -21,8 +21,10 @@ class BaseJSONWrapper:
         for k, v in kwargs.items():
             if k not in self.__annotations__: continue
             setattr(self, k, v)
+        data: dict[str, Any] = {k:v for k,v in self.__dict__.items() if not (k=="_fp" or k=="_data")}
+        data.update(self._data.items())
         with open(self._fp, "w") as file:
-            json.dump({k:v for k,v in (self.__dict__.items() + self._data.items()) if not (k=="_fp" or k=="_data")}, file, indent=4, cls=cls)
+            json.dump(data, file, indent=4, cls=cls)
     
     @classmethod
     def create_from_json(_cls: type[Self], fp: str, *, cls: type[json.JSONDecoder] | None = None, **kwargs) -> Self | None:
