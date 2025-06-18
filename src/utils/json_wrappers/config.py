@@ -16,7 +16,7 @@ DEFAULT_CONFIG = {
 
 @dataclass(kw_only=True)
 class Config(BaseJSONWrapper):
-    token: str = field(repr=False)
+    token: str = field(repr=False, hash=False, compare=False)
     guild_id: int
     afk_interval_min_mins: float = 15.0
     afk_interval_max_mins: float = 30.0
