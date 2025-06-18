@@ -19,11 +19,12 @@ class CogConfiguration(extCommands.Cog, name=__name__):
     
     ADMIN_GROUP = GROUP.create_subgroup("admin", "Manage bot admins")
     
-    @ADMIN_GROUP.command(name="add", description="Give admin to a user", options=[
+    @ADMIN_GROUP.command(name="add", options=[
         Option(discord.User, name="user", description="The user to give admin to")
     ])
     @extCommands.is_owner()
     async def config_admin_add(self, ctx: ApplicationContext, user: discord.User):
+        """Give admin to a user"""
         if await self.BOT.is_owner(user):
             await ctx.respond("Can't make yourself (the owner) an admin", ephemeral=True)
             return
@@ -35,11 +36,12 @@ class CogConfiguration(extCommands.Cog, name=__name__):
         update_config(self.BOT.config, admin_ids=admin_ids)
         await ctx.respond(f"Admin given to {user.mention}", ephemeral=True)
     
-    @ADMIN_GROUP.command(name="remove" , description="Remove admin from a user", options=[
+    @ADMIN_GROUP.command(name="remove" , options=[
         Option(discord.User, name="user", description="The user to remove admin from")
     ])
     @extCommands.is_owner()
     async def config_admin_remove(self, ctx: ApplicationContext, user: discord.User):
+        """Remove admin from a user"""
         if await self.BOT.is_owner(user):
             await ctx.respond("Can't unmake yourself (the owner) an admin", ephemeral=True)
             return
@@ -54,7 +56,7 @@ class CogConfiguration(extCommands.Cog, name=__name__):
     @ADMIN_GROUP.command(name="list", options=[])
     @is_admin()
     async def config_admin_list(self, ctx: ApplicationContext):
-        """List users with permissions on the bot"""
+        """List users with admin permissions on the bot"""
         users = list()
         if self.BOT.owner_id is None:
             for id in self.BOT.owner_ids:
@@ -63,7 +65,7 @@ class CogConfiguration(extCommands.Cog, name=__name__):
             users.append(f"<@{self.BOT.owner_id}> - Owner")
         for id in self.BOT.config.admin_ids:
             users.append(f"<@{id}> - Admin")
-        await ctx.respond("List of users with permission:\n{}".format("\n".join(users)), ephemeral=True)
+        await ctx.respond("List of users with admin permission:\n{}".format("\n".join(users)), ephemeral=True)
 
 
 # Extension related functions
