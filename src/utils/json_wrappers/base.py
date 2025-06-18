@@ -3,15 +3,15 @@ from dataclasses import dataclass, field
 from typing import Self, Any
 
 
-@dataclass(kw_only=True)
+@dataclass(kw_only=True, eq=False)
 class BaseJSONWrapper:
     """Base class for wrapping a JSON file to a Python object.
     
     `_fp`: File path to the JSON file that this object wraps.
     
     `_data`: Additional data that should be in the JSON but aren't or shouldn't be in the dataclass."""
-    _fp: str
-    _data: dict[str, Any] = field(default_factory=dict)
+    _fp: str = field(hash=False, compare=False)
+    _data: dict[str, Any] = field(default_factory=dict, hash=False, compare=False)
     
     
     def update(self: Self, *, cls: type[json.JSONEncoder] | None = None, **kwargs) -> None:
