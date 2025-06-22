@@ -12,10 +12,13 @@ class CogUngrouped(extCommands.Cog, name=__name__):
     
     
     # Application commands
-    @slash_command()
-    async def hello_world(self, ctx: ApplicationContext):
-        """Hello world!"""
-        await ctx.respond("Hello world from the ungrouped group!", ephemeral=True)
+    @slash_command(name="leaderboard")
+    async def leaderboard(self, ctx: ApplicationContext):
+        """View the leaderboard for the current or previous event, whichever is applicable"""
+        
+        # do leaderboard shit here
+        
+        await ctx.respond("Insert leaderboard here")
 
 
 # Extension related functions
