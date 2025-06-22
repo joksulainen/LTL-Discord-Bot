@@ -23,35 +23,35 @@ class CogConfiguration(extCommands.Cog, name=__name__):
         Option(discord.User, name="user", description="The user to give admin to")
     ])
     @extCommands.is_owner()
-    async def config_admin_add(self, ctx: ApplicationContext, user: discord.User):
+    async def config_admin_add(self, ctx: ApplicationContext, param_user: discord.User):
         """Give admin to a user"""
-        if await self.BOT.is_owner(user):
+        if await self.BOT.is_owner(param_user):
             await ctx.respond("Can't make yourself (the owner) an admin", ephemeral=True)
             return
         admin_ids = self.BOT.config.admin_ids
-        if user.id in admin_ids:
-            await ctx.respond(f"{user.mention} already has admin", ephemeral=True)
+        if param_user.id in admin_ids:
+            await ctx.respond(f"{param_user.mention} already has admin", ephemeral=True)
             return
-        admin_ids.append(user.id)
+        admin_ids.append(param_user.id)
         update_config(self.BOT.config, admin_ids=admin_ids)
-        await ctx.respond(f"Admin given to {user.mention}", ephemeral=True)
+        await ctx.respond(f"Admin given to {param_user.mention}", ephemeral=True)
     
     @ADMIN_GROUP.command(name="remove" , options=[
         Option(discord.User, name="user", description="The user to remove admin from")
     ])
     @extCommands.is_owner()
-    async def config_admin_remove(self, ctx: ApplicationContext, user: discord.User):
+    async def config_admin_remove(self, ctx: ApplicationContext, param_user: discord.User):
         """Remove admin from a user"""
-        if await self.BOT.is_owner(user):
+        if await self.BOT.is_owner(param_user):
             await ctx.respond("Can't unmake yourself (the owner) an admin", ephemeral=True)
             return
         admin_ids = self.BOT.config.admin_ids
-        if user.id not in admin_ids:
-            await ctx.respond(f"{user.mention} doesn't have admin", ephemeral=True)
+        if param_user.id not in admin_ids:
+            await ctx.respond(f"{param_user.mention} doesn't have admin", ephemeral=True)
             return
-        admin_ids.remove(user.id)
+        admin_ids.remove(param_user.id)
         update_config(self.BOT.config, admin_ids=admin_ids)
-        await ctx.respond(f"Admin removed from {user.mention}", ephemeral=True)
+        await ctx.respond(f"Admin removed from {param_user.mention}", ephemeral=True)
     
     @ADMIN_GROUP.command(name="list", options=[])
     @is_admin()
