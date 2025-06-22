@@ -54,6 +54,12 @@ async def on_application_command_error(ctx: ApplicationContext, error: Applicati
             await ctx.respond("Something went wrong!", ephemeral=True)
 
 
+# Global guild check
+@BOT.check
+def global_guild_check(ctx: ApplicationContext):
+    return ctx.guild is not None
+
+
 # Setup function
 def setup():
     print("Loading config...")
