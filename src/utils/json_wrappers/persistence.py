@@ -8,6 +8,7 @@ from .. import LeaderboardEntry
 
 
 DEFAULT_PERSISTENCE = {
+    "$schema": "./ltl-bot-persistence.schema.json",
     "participants": list(),
     "event_channel_id": 0,
     "starting_time": 0.0,
@@ -22,6 +23,10 @@ class Persistence(BaseJSONWrapper):
     starting_time: float = 0.0
     ending_time: float = 0.0
     leaderboard: list[LeaderboardEntry] = field(default_factory=list)
+    
+    
+    def __post_init__(self):
+        self._data["$schema"] = DEFAULT_PERSISTENCE["$schema"]
 
 
 # JSON encoder and decoder classes to handle any classes in the Persistence dataclass

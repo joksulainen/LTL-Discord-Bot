@@ -1,0 +1,55 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "title": "LTL Bot Persistence",
+    "description": "A schema describing the contents of the LTL Discord bot persistence file.",
+    "type": "object",
+    "properties": {
+        "participants": {
+            "type": "array",
+            "items": {
+                "type": "integer"
+            },
+            "description": "An array of user IDs that are in the event.",
+            "uniqueItems": true
+        },
+        "event_channel_id": {
+            "type": "integer",
+            "description": "ID of the voice channel where the event is happening."
+        },
+        "starting_time": {
+            "type": "number",
+            "description": "Timestamp of when the (previous) event started."
+        },
+        "ending_time": {
+            "type": "number",
+            "description": "Timestamp of when the previous event ended."
+        },
+        "leaderboard": {
+            "type": "array",
+            "items": {
+                "type": "array",
+                "items": [
+                    {
+                        "type": "integer",
+                        "description": "User ID"
+                    },
+                    {
+                        "type": "number",
+                        "description": "Timestamp"
+                    }
+                ],
+                "description": "The first element is a user ID and the second a timestamp.",
+                "additionalItems": false
+            },
+            "description": "An array of leaderboard entries.",
+            "uniqueItems": true
+        }
+    },
+    "required": [
+        "participants",
+        "event_channel_id",
+        "starting_time",
+        "ending_time",
+        "leaderboard"
+    ]
+}
