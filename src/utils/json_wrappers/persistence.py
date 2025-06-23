@@ -9,7 +9,7 @@ from .. import LeaderboardEntry
 
 DEFAULT_PERSISTENCE = {
     "participants": list(),
-    "event_channel": 0,
+    "event_channel_id": 0,
     "starting_time": 0.0,
     "ending_time": 0.0,
     "leaderboard": list()
@@ -18,7 +18,7 @@ DEFAULT_PERSISTENCE = {
 @dataclass(kw_only=True)
 class Persistence(BaseJSONWrapper):
     participants: list[int] = field(default_factory=list)
-    event_channel: int = 0
+    event_channel_id: int = 0
     starting_time: float = 0.0
     ending_time: float = 0.0
     leaderboard: list[LeaderboardEntry] = field(default_factory=list)

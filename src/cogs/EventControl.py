@@ -12,8 +12,8 @@ class CogEventControl(extCommands.Cog, name=__name__):
     def __init__(self, bot: LTLBot):
         self.BOT = bot
         self.__cog_guild_ids__ = [bot.config.guild_id]
-
-
+    
+    
     # Application commands
     GROUP = discord.SlashCommandGroup("event")
     
@@ -25,8 +25,8 @@ class CogEventControl(extCommands.Cog, name=__name__):
     async def event_start(self, ctx: ApplicationContext, param_channel: discord.VoiceChannel, param_exclude_role: discord.Role | None = None):
         """Start a new event"""
         # guard clause to prevent an event from being started if one is already active
-        if self.BOT.persistence.event_channel != 0:
-            channel = self.BOT.get_channel(self.BOT.persistence.event_channel)
+        if self.BOT.persistence.event_channel_id != 0:
+            channel = self.BOT.get_channel(self.BOT.persistence.event_channel_id)
             
             await ctx.respond(
                 (f"There is already an existing event happening in {channel.mention}" 
@@ -58,7 +58,7 @@ class CogEventControl(extCommands.Cog, name=__name__):
         # update persistence file and acknowledge completion of the operation
         update_persistence(
             self.BOT.persistence,
-            event_channel=param_channel.id,
+            event_channel_id=param_channel.id,
             participants=participant_list,
             starting_time=timestamp,
             ending_time=0.0
@@ -72,7 +72,7 @@ class CogEventControl(extCommands.Cog, name=__name__):
     async def event_end(self, ctx: ApplicationContext):
         """End a running event"""
         # guard clause to prevent ending a non-existent event
-        if self.BOT.persistence.event_channel == 0:
+        if self.BOT.persistence.event_channel_id == 0:
             await ctx.respond("There's no event running currently", ephemeral=True)
             return
         
@@ -80,7 +80,7 @@ class CogEventControl(extCommands.Cog, name=__name__):
         await ctx.defer(ephemeral=True)
         
         # get the channel object of where the event is running
-        channel = self.BOT.get_channel(self.BOT.persistence.event_channel)
+        channel = self.BOT.get_channel(self.BOT.persistence.event_channel_id)
         
         # get the current timestamp
         timestamp = datetime.datetime.now(datetime.UTC).timestamp()
@@ -88,7 +88,7 @@ class CogEventControl(extCommands.Cog, name=__name__):
         # update persistence file and acknowledge completion of the operation
         update_persistence(
             self.BOT.persistence,
-            event_channel=0,
+            event_channel_id=0,
             ending_time=timestamp
         )
         ## public facing message
