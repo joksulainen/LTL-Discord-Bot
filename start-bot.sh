@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [ -x "$(command -v uv)" ] then
     echo Running bot using uv
     uv run ./src/main.py
