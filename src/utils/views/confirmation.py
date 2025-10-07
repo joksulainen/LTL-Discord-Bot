@@ -25,7 +25,7 @@ class ConfirmationButton(Button):
 
 class ConfirmationView(View):
     """View for actions that require confirmation. `decision` is a bool or None if there is no response or the view timed out."""
-    _authorId: int
+    _author_id: int
     decision: bool | None = None
     
     def __init__(self, author: int, *,
@@ -34,14 +34,14 @@ class ConfirmationView(View):
             lbl_no: str = "No",
             **kwargs
         ):
-        self._authorId = author
+        self._author_id = author
         super().__init__(timeout=timeout, disable_on_timeout=True, **kwargs)
         self.add_item(ConfirmationButton(action=True, label=lbl_yes, style=ButtonStyle.green))
         self.add_item(ConfirmationButton(action=False, label=lbl_no, style=ButtonStyle.red))
     
     
     async def interaction_check(self, interaction: discord.Interaction):
-        return interaction.user.id == self._authorId
+        return interaction.user.id == self._author_id
     
     async def on_check_failure(self, interaction: discord.Interaction):
         await interaction.respond("You're not the original author of this view!", ephemeral=True)
