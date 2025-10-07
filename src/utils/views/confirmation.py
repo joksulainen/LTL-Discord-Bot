@@ -11,11 +11,10 @@ class ConfirmationButton(Button):
             style: ButtonStyle = ButtonStyle.secondary,
             label: str,
             custom_id: str | None = None,
-            emoji: discord.PartialEmoji | None = None,
-            row: int | None = None
+            emoji: discord.PartialEmoji | None = None
         ):
         self._action = action
-        super().__init__(style=style, label=label, custom_id=custom_id, emoji=emoji, row=row)
+        super().__init__(style=style, label=label, custom_id=custom_id, emoji=emoji)
     
     
     async def callback(self, interaction: discord.Interaction):
