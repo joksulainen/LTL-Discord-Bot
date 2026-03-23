@@ -12,20 +12,20 @@ I won't be upset if people choose to fork and continue work without me whether i
 ### With uv
 
 1. Install [uv](https://github.com/astral-sh/uv) through your preferred method.
-1. Run `Start bot.bat` once.
+1. Run `start-bot.bat` once.
     - Use the `.sh` script on Linux based systems.
 1. Open `config.json` and fill `token` and `guild_id` fields.
-1. Run `Start bot.bat` again.
+1. Run `start-bot.bat` again.
 
 ### Without uv
 
 1. Install [Python 3.13](https://www.python.org/downloads/) through your preferred method.
 1. Install program dependencies.
     - Run `pip install -r ./requirements.txt` in project root, preferably in a virtual environment to not bloat the system install.
-1. Run `Start bot.bat` once.
+1. Run `start-bot.bat` once.
     - Use the `.sh` script on Linux based systems.
 1. Open `config.json` and fill `token` and `guild_id` fields.
-1. Run `Start bot.bat` again.
+1. Run `start-bot.bat` again.
 
 ## How to contribute or continue work
 
