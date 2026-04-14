@@ -1,5 +1,6 @@
 import discord
 import discord.ext.commands as extCommands
+import discord.ext.pages as extPages
 from discord import ApplicationContext, Option, slash_command
 
 from LTLBot import LTLBot
@@ -15,9 +16,13 @@ class CogUngrouped(extCommands.Cog, name=__name__):
     @slash_command(name="leaderboard")
     async def leaderboard(self, ctx: ApplicationContext):
         """View the leaderboard for the current or previous event, whichever is applicable"""
+        # acknowledge command
+        await ctx.defer()
         
-        # do leaderboard shit here
+        # acquire a copy of the leaderboard
+        lb = self.BOT.persistence.leaderboard
         
+        # respond with the leaderboard paginator
         await ctx.respond("Insert leaderboard here")
 
 

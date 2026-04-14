@@ -9,8 +9,8 @@ DEFAULT_CONFIG = {
     "$schema": "./ltl-bot-config.schema.json",
     "token": "",
     "guild_id": 0,
-    "afk_interval_min_mins": 15.0,
-    "afk_interval_max_mins": 30.0,
+    "afk_interval_min_mins": 30.0,
+    "afk_interval_max_mins": 60.0,
     "admin_ids": list(),
 }
 
@@ -18,8 +18,8 @@ DEFAULT_CONFIG = {
 class Config(BaseJSONWrapper):
     token: str = field(repr=False, hash=False, compare=False)
     guild_id: int
-    afk_interval_min_mins: float = 15.0
-    afk_interval_max_mins: float = 30.0
+    afk_interval_min_mins: float = 30.0
+    afk_interval_max_mins: float = 60.0
     admin_ids: list[int] = field(default_factory=list)
     
     
