@@ -4,8 +4,8 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationContext, Option, slash_command
 
-from utils.json_wrappers import update_persistence
 from LTLBot import LTLBot
+from utils.json_wrappers import update_persistence
 
 
 class CogEventControl(extCommands.Cog, name=__name__):
@@ -39,7 +39,7 @@ class CogEventControl(extCommands.Cog, name=__name__):
         await ctx.defer(ephemeral=True)
         
         # init some lists
-        participant_list: list[int] = list()
+        participant_list: list[int] = []
         channel_members: list[discord.Member] = param_channel.members
         
         # iterate over channel_members to remove users with the specified role

@@ -7,10 +7,9 @@ import discord
 import discord.ext.commands as extCommands
 from discord import ApplicationCommandInvokeError, ApplicationContext
 
-from LTLBot import LTLBot
 import utils
+from LTLBot import LTLBot
 from utils.json_wrappers import create_config, create_persistence
-
 
 CONFIG_PATH = "./config.json"
 PERSISTENCE_PATH = "./persistence.json"

@@ -1,6 +1,6 @@
 import discord
 import discord.ext.commands as extCommands
-from discord import ApplicationContext, Option, slash_command, OptionChoice
+from discord import ApplicationContext, Option, OptionChoice, slash_command
 
 from LTLBot import LTLBot
 from utils import is_admin
@@ -57,7 +57,7 @@ class CogConfiguration(extCommands.Cog, name=__name__):
     @is_admin()
     async def config_admin_list(self, ctx: ApplicationContext):
         """List users with admin permissions on the bot"""
-        users = list()
+        users = []
         if self.BOT.owner_id is None:
             for id in self.BOT.owner_ids:
                 users.append(f"<@{id}> - Owner")

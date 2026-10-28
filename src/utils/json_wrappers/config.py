@@ -4,14 +4,13 @@ from dataclasses import dataclass, field
 
 from .base import BaseJSONWrapper
 
-
 DEFAULT_CONFIG = {
     "$schema": "./ltl-bot-config.schema.json",
     "token": "",
     "guild_id": 0,
     "afk_interval_min_mins": 30.0,
     "afk_interval_max_mins": 60.0,
-    "admin_ids": list(),
+    "admin_ids": [],
 }
 
 @dataclass(kw_only=True)

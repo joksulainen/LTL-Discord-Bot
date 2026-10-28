@@ -1,1 +1,1 @@
-from .confirmation import ConfirmationView
+from .confirmation import ConfirmationView as ConfirmationView

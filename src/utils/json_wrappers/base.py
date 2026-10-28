@@ -1,6 +1,6 @@
 import json
 from dataclasses import dataclass, field
-from typing import Self, Any
+from typing import Any, Self
 
 
 @dataclass(kw_only=True, eq=False)

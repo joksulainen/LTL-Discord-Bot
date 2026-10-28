@@ -1,19 +1,18 @@
 import json
 from dataclasses import dataclass, field
-from json import JSONEncoder, JSONDecoder
+from json import JSONDecoder, JSONEncoder
 from typing import Any
 
-from .base import BaseJSONWrapper
 from .. import LeaderboardEntry
-
+from .base import BaseJSONWrapper
 
 DEFAULT_PERSISTENCE = {
     "$schema": "./ltl-bot-persistence.schema.json",
-    "participants": list(),
+    "participants": [],
     "event_channel_id": 0,
     "starting_time": 0.0,
     "ending_time": 0.0,
-    "leaderboard": list()
+    "leaderboard": []
 }
 
 @dataclass(kw_only=True)
@@ -42,7 +41,7 @@ class PersistenceJSONDecoder(JSONDecoder):
     
     def object_hook(self, dct: dict[str, Any]) -> dict[str, Any]:
         if "leaderboard" in dct:
-            temp = list()
+            temp = []
             for item in dct["leaderboard"]:
                 temp.append(LeaderboardEntry(item[0], item[1]))
             dct["leaderboard"] = temp

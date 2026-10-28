@@ -1,6 +1,6 @@
 import discord
 from discord import ButtonStyle
-from discord.ui import View, Button
+from discord.ui import Button, View
 
 
 class ConfirmationButton(Button):
