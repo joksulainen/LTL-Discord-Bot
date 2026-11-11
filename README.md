@@ -12,7 +12,7 @@ I won't be upset if people choose to fork and continue work without me whether i
 ### With uv
 
 1. Install [uv](https://github.com/astral-sh/uv) through your preferred method.
-1. Install project dependencies by running `uv sync` in project directory.
+1. Install project dependencies by running `uv sync --no-dev` in project directory.
 1. Run `start-bot.bat` once.
     - Use the `.sh` script on Linux based systems.
 1. Open `config.json` and fill `token` and `guild_id` fields.
