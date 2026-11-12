@@ -4,10 +4,6 @@
     "description": "A schema describing the contents of the LTL Discord bot config file.",
     "type": "object",
     "properties": {
-        "token": {
-            "type": "string",
-            "description": "The token that the Discord bot will use."
-        },
         "guild_id": {
             "type": "integer",
             "description": "ID of the Discord server that the bot will operate in. This is used to register commands specifically for that Discord server."
@@ -34,7 +30,6 @@
         }
     },
     "required": [
-        "token",
         "guild_id",
         "status_channel_id",
         "afk_interval_min_mins",

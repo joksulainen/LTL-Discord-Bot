@@ -38,19 +38,11 @@ class CogEventControl(extCommands.Cog, name=__name__):
         # acknowledge that the command has been received
         await ctx.defer(ephemeral=True)
         
-        # init some lists
-        participant_list: list[int] = []
-        channel_members: list[discord.Member] = param_channel.members
+        # get list of members in the channel without the specified role
+        channel_members: list[discord.Member] = [m for m in param_channel.members if param_exclude_role not in m.roles]
         
-        # iterate over channel_members to remove users with the specified role
-        if param_exclude_role is not None:
-            for member in channel_members:
-                if param_exclude_role in member.roles:
-                    channel_members.remove(member)
-        
-        # iterate over channel_members to get their ids
-        for member in channel_members:
-            participant_list.append(member.id)
+        # list of participant ids from channel_members
+        participant_list: list[int] = [m.id for m in channel_members]
         
         # get the current timestamp
         timestamp = datetime.datetime.now(datetime.UTC).timestamp()

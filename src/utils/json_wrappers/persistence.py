@@ -1,12 +1,13 @@
 import json
 from dataclasses import dataclass, field
 from json import JSONDecoder, JSONEncoder
+from pathlib import Path
 from typing import Any
 
 from .. import LeaderboardEntry
 from .base import BaseJSONWrapper
 
-DEFAULT_PERSISTENCE = {
+DEFAULT_PERSISTENCE: dict[str, Any] = {
     "$schema": "./ltl-bot-persistence.schema.json",
     "participants": [],
     "event_channel_id": 0,
@@ -49,19 +50,15 @@ class PersistenceJSONDecoder(JSONDecoder):
 
 
 # Helper functions
-def create_persistence(fp: str, *, return_success: bool = False) -> Persistence | tuple[Persistence, bool]:
-    """Creates a `Persistence` object and returns it.
-    
-    Optional `return_success` kwarg makes function return success with loading from existing file as well."""
+def create_persistence(fp: Path) -> tuple[Persistence, bool]:
+    """Creates a `Persistence` object and returns it with success for loading from existing file."""
     persistence = Persistence.create_from_json(fp, cls=PersistenceJSONDecoder)
     success = persistence is not None
     if not success:
-        with open(fp, "w") as file:
+        with fp.open("w") as file:
             json.dump(DEFAULT_PERSISTENCE, file, indent=4, cls=PersistenceJSONEncoder)
         persistence = Persistence(_fp=fp, **DEFAULT_PERSISTENCE)
-    if return_success:
-        return persistence, success
-    return persistence
+    return persistence, success
 
 def update_persistence(persistence: Persistence, **kwargs) -> None:
     """Updates provided `Persistence` object using provided kwargs and writes it to file."""

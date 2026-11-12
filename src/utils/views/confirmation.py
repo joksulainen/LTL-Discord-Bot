@@ -41,7 +41,7 @@ class ConfirmationView(View):
     
     
     async def interaction_check(self, interaction: discord.Interaction):
-        return interaction.user.id == self._author_id
+        return interaction.user is not None and interaction.user.id == self._author_id
     
     async def on_check_failure(self, interaction: discord.Interaction):
         await interaction.respond("You're not the original author of this view!", ephemeral=True)

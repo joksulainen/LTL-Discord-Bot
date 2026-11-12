@@ -1,12 +1,11 @@
-import json
-import sys
 from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
 
 from .base import BaseJSONWrapper
 
-DEFAULT_CONFIG = {
+DEFAULT_CONFIG: dict[str, Any] = {
     "$schema": "./ltl-bot-config.schema.json",
-    "token": "",
     "guild_id": 0,
     "afk_interval_min_mins": 30.0,
     "afk_interval_max_mins": 60.0,
@@ -15,7 +14,6 @@ DEFAULT_CONFIG = {
 
 @dataclass(kw_only=True)
 class Config(BaseJSONWrapper):
-    token: str = field(repr=False, hash=False, compare=False)
     guild_id: int
     afk_interval_min_mins: float = 30.0
     afk_interval_max_mins: float = 60.0
@@ -27,18 +25,9 @@ class Config(BaseJSONWrapper):
 
 
 # Helper functions
-def create_config(fp: str, *, handle_write: bool = False) -> Config | None:
-    """Creates a `Config` object using the given file path and returns it. Returns `None` if file path doesn't exist.
-    
-    Optional `handle_write` kwarg makes function do file writing and program exiting."""
+def create_config(fp: Path) -> Config | None:
+    """Creates a `Config` object using the given file path and returns it. Returns `None` if file path doesn't exist."""
     config = Config.create_from_json(fp)
-    if not handle_write: return config
-    if config is None:
-        with open(fp, "w") as file:
-            json.dump(DEFAULT_CONFIG, file, indent=4)
-        print(f"Created new config at '{fp}'. Fill out the 'token' and 'guild_id' fields before starting the script again.\n" \
-                "Not doing so will cause the script to run into an error.")
-        sys.exit()
     return config
 
 def update_config(config: Config, **kwargs) -> None:

@@ -1,5 +1,6 @@
 import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from typing import Any, Self
 
 
@@ -10,7 +11,7 @@ class BaseJSONWrapper:
     `_fp`: File path to the JSON file that this object wraps.
     
     `_data`: Additional data that should be in the JSON but aren't or shouldn't be in the dataclass."""
-    _fp: str = field(hash=False, compare=False)
+    _fp: Path = field(hash=False, compare=False)
     _data: dict[str, Any] = field(default_factory=dict, hash=False, compare=False)
     
     
@@ -23,11 +24,11 @@ class BaseJSONWrapper:
             setattr(self, k, v)
         data: dict[str, Any] = {k:v for k,v in self.__dict__.items() if not (k=="_fp" or k=="_data")}
         data.update(self._data.items())
-        with open(self._fp, "w") as file:
+        with self._fp.open("w") as file:
             json.dump(data, file, indent=4, cls=cls)
     
     @classmethod
-    def create_from_json(_cls: type[Self], fp: str, *, cls: type[json.JSONDecoder] | None = None, **kwargs) -> Self | None:
+    def create_from_json(_cls: type[Self], fp: Path, *, cls: type[json.JSONDecoder] | None = None, **kwargs) -> Self | None:
         """Creates an object using the given file path. Returns `None` if file path doesn't exist or isn't JSON.
         
         `cls`: A JSONDecoder class that will be used to decode the JSON to Python objects with."""
